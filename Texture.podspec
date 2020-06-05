@@ -1,11 +1,11 @@
 Pod::Spec.new do |spec|
   spec.name         = 'Texture'
-  spec.version      = '2.8.1'
+  spec.version      = '2.8.1-tvlk'
   spec.license      =  { :type => 'Apache 2',  }
   spec.homepage     = 'http://texturegroup.org'
   spec.authors      = { 'Huy Nguyen' => 'hi@huynguyen.dev', 'Garrett Moon' => 'garrett@excitedpixel.com', 'Scott Goodson' => 'scottgoodson@gmail.com', 'Michael Schneider' => 'mischneider1@gmail.com', 'Adlai Holler' => 'adlai@icloud.com' }
   spec.summary      = 'Smooth asynchronous user interfaces for iOS apps.'
-  spec.source       = { :git => 'https://github.com/TextureGroup/Texture.git', :tag => spec.version.to_s }
+  spec.source       = { :git => 'https://github.com/traveloka/Texture.git', :tag => spec.version.to_s }
   spec.module_name  = 'AsyncDisplayKit'
   spec.header_dir   = 'AsyncDisplayKit'
 
@@ -26,10 +26,10 @@ Pod::Spec.new do |spec|
       'Source/TextKit/ASTextNodeTypes.h',
       'Source/TextKit/ASTextKitComponents.h'
     ]
-    
+
     core.source_files = [
       'Source/**/*.{h,mm}',
-      
+
       # Most TextKit components are not public because the C++ content
       # in the headers will cause build errors when using
       # `use_frameworks!` on 0.39.0 & Swift 2.1.
@@ -37,15 +37,16 @@ Pod::Spec.new do |spec|
       'Source/TextKit/*.h',
     ]
   end
-  
+
   spec.subspec 'PINRemoteImage' do |pin|
-    pin.dependency 'PINRemoteImage/iOS', '= 3.0.0-beta.14'
+    pin.dependency 'PINRemoteImage/iOS', '~> 3.0.0'
     pin.dependency 'PINRemoteImage/PINCache'
     pin.dependency 'Texture/Core'
   end
 
   spec.subspec 'IGListKit' do |igl|
-    igl.dependency 'IGListKit', '~> 3.0'
+    igl.dependency 'IGListKit', '~> 4.0'
+    igl.dependency 'IGListDiffKit', '~> 4.0'
     igl.dependency 'Texture/Core'
   end
 
@@ -54,7 +55,7 @@ Pod::Spec.new do |spec|
     yoga.dependency 'Yoga', '1.6.0'
     yoga.dependency 'Texture/Core'
   end
-  
+
   # If flag is enabled the old TextNode with all dependencies will be compiled out
   spec.subspec 'TextNode2' do |text_node|
     text_node.xcconfig = { 'GCC_PREPROCESSOR_DEFINITIONS' => '$(inherited) AS_ENABLE_TEXTNODE=0' }
@@ -65,7 +66,7 @@ Pod::Spec.new do |spec|
     video.frameworks = ['AVFoundation', 'CoreMedia']
     video.xcconfig = { 'GCC_PREPROCESSOR_DEFINITIONS' => '$(inherited) AS_USE_VIDEO=1' }
     video.dependency 'Texture/Core'
-  end 
+  end
 
   spec.subspec 'MapKit' do |map|
     map.frameworks = ['CoreLocation', 'MapKit']
@@ -87,7 +88,7 @@ Pod::Spec.new do |spec|
 
   # Include these by default for backwards compatibility.
   # This will change in 3.0.
-  spec.default_subspecs = 'Core', 'PINRemoteImage', 'Video', 'MapKit', 'AssetsLibrary', 'Photos'
+  spec.default_subspecs = 'Core', 'PINRemoteImage', 'Video', 'MapKit', 'AssetsLibrary', 'Photos', 'IGListKit', 'Yoga'
 
   spec.social_media_url = 'https://twitter.com/TextureiOS'
   spec.library = 'c++'
@@ -95,5 +96,5 @@ Pod::Spec.new do |spec|
     'CLANG_CXX_LANGUAGE_STANDARD' => 'c++11',
     'CLANG_CXX_LIBRARY' => 'libc++'
    }
-   
+
 end
